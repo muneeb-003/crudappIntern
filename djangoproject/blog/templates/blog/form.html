@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if form.instance.pk %}
+            {%if form.instance.created == form.instance.updated %}
+                <p><strong>Created at:</strong> {{ form.instance.created }}</p>
+                <!-- <p><strong>Updated at:</strong> {{ form.instance.updated }}</p> -->
+            {% else %}
+                    <p><strong>Created at:</strong> {{ form.instance.created }}</p>
+                    <p><strong>Updated at:</strong> {{ form.instance.updated }}</p>
+            {%endif%}
+            
+            
+        {% endif %}
+
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="{% url 'blog:index' %}">Cancel</a>
+</body>
+</html>

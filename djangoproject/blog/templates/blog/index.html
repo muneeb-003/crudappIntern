@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Home</title>
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+
+    {% for post in latestPosts %}
+        <div style="margin-bottom: 20px;">
+            <h2><a href="{% url 'blog:details' post.pk %}">{{ post.title }}</a></h2>
+            <p>by {{ post.author }} on {{ post.created_at|date:"M d, Y" }}</p>
+            <p>{{ post.content|truncatewords:30 }}</p>
+        </div>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
+    
+    <a href="{% url 'blog:create' %}">+ Create New Post</a>
+
+
+</body>
+</html>

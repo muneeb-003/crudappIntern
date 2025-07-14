@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ post.title }} </title>
+    </head>
+    <body>
+        <h1>{{ post.title }}</h1>
+        <p>by {{ post.author }} on {{ post.created}} </p>
+        {%if post.updated %}
+        <p>Updated at {{ post.updated}}</p>
+        {% endif %}
+        <p>{{ post.content }}</p>
+
+        <br><br>
+
+        <a href="{% url 'blog:edit' post.pk %}"> Edit</a> 
+        
+        <br>
+        <br>
+
+        <a href="{% url 'blog:delete' post.pk %}"> Delete</a>
+        <br> <br>
+
+        <hr>
+
+        <h2>Comments</h2>
+        {% for comment in post.comments.all  %}
+            <div style="margin-bottom: 10px;">
+                <strong>{{ comment.user }}</strong> said:<br>
+                {{ comment.comment }}
+                <form action="{% url 'blog:delete-comment' comment.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        <hr>
+        <h3>Add a Comment</h3>
+        <form method="post" action="{% url 'blog:add-comment' post.pk %}">
+            {% csrf_token %}
+            <input type="text" name="user" placeholder="Your name" required><br><br>
+            <textarea name="comment" rows="4" cols="50" placeholder="Your comment" required></textarea><br><br>
+            <button type="submit">Submit Comment</button>
+        </form>
+
+        <br><br>
+        <a href="{% url 'blog:index' %}">← Back to All Posts</a>
+    </body>
+</html>
