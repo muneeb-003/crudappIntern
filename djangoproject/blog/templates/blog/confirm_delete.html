@@ -1,17 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Delete Post</title>
+     <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}">
 </head>
 <body>
-    <h1>Are you sure you want to delete "{{ post.title }}"?</h1>
-    <p>This action cannot be undone.</p>
+    <div class="delete-confirm">
+        <h1>Are you sure you want to delete "{{ post.title }}"?</h1>
+        <p>This action cannot be undone.</p>
 
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Yes, delete</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, delete</button>
+        </form>
 
-    <a href="{% url 'blog:details' post.pk %}">Cancel</a>
-</body>
+        <a href="{% url 'blog:details' post.pk %}">Cancel</a>
+    </div>
+    </body>
 </html>

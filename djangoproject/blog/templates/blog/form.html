@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</title>
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}">
 </head>
 <body>
+
+<div class="post-form">
     <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</h1>
 
     <form method="post">
@@ -11,20 +15,19 @@
         {{ form.as_p }}
 
         {% if form.instance.pk %}
-            {%if form.instance.created == form.instance.updated %}
-                <p><strong>Created at:</strong> {{ form.instance.created }}</p>
-                <!-- <p><strong>Updated at:</strong> {{ form.instance.updated }}</p> -->
+            {% if form.instance.created == form.instance.updated %}
+                <p class="timestamp"><strong>Created at:</strong> {{ form.instance.created }}</p>
             {% else %}
-                    <p><strong>Created at:</strong> {{ form.instance.created }}</p>
-                    <p><strong>Updated at:</strong> {{ form.instance.updated }}</p>
-            {%endif%}
-            
-            
+                <p class="timestamp"><strong>Created at:</strong> {{ form.instance.created }}</p>
+                <p class="timestamp"><strong>Updated at:</strong> {{ form.instance.updated }}</p>
+            {% endif %}
         {% endif %}
 
         <button type="submit">Save</button>
     </form>
 
-    <a href="{% url 'blog:index' %}">Cancel</a>
+    <a href="{% url 'blog:index' %}" class="cancel-link">Cancel</a>
+</div>
+
 </body>
 </html>
